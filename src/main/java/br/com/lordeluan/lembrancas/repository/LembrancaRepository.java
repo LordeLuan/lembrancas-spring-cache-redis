@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LembrancaRepository extends JpaRepository<Lembranca, Integer>{
 
-    List<LembrancaProjecao> findByTitulo(String titulo);
+    List<LembrancaProjecao> findByTituloContaining(String titulo);
 }

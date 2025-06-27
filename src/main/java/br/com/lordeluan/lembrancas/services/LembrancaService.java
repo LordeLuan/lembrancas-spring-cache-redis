@@ -37,7 +37,7 @@ public class LembrancaService {
     @Cacheable(value = "lembrancas", key = "#titulo.toLowerCase().replaceAll(' ', '_')")
     public List<LembrancaProjecao> buscarPorTitulo(String titulo) {
         System.out.println("Buscando lembranças por título: " + titulo);
-        List<LembrancaProjecao> proj = lembrancaRepository.findByTitulo(titulo);
+        List<LembrancaProjecao> proj = lembrancaRepository.findByTituloContaining(titulo);
         return proj;
     } 
 

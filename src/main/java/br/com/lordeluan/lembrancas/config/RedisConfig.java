@@ -11,7 +11,7 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 @Configuration
 public class RedisConfig {
 
-        @Bean
+    @Bean
     public RedisCacheConfiguration defaultCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(120))// 2 horas

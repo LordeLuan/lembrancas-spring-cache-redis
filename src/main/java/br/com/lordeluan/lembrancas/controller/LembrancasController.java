@@ -1,6 +1,7 @@
 package br.com.lordeluan.lembrancas.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.lordeluan.lembrancas.services.LembrancaService;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,10 @@ import br.com.lordeluan.lembrancas.domain.Lembranca;
 import br.com.lordeluan.lembrancas.dtos.LembrancaDto;
 import br.com.lordeluan.lembrancas.dtos.LembrancaProjecao;
 
+import java.net.URI;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/api/lembrancas")
@@ -49,15 +50,15 @@ public class LembrancasController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> salvar(@RequestBody @Validated LembrancaDto dto) {
+    public ResponseEntity<Lembranca> salvar(@RequestBody @Validated LembrancaDto dto, UriComponentsBuilder uriBuilder) {
         Lembranca entity = new Lembranca();
         entity.setTitulo(dto.titulo());
         entity.setDescricao(dto.descricao());
 
         lembrancaService.salvarLembranca(entity);
 
-        return ResponseEntity.created(null)
-                .body("Lembrança salva com sucesso!");
+        URI uri = uriBuilder.path("/lembrancas/{id}").buildAndExpand(entity.getId()).toUri();
+        return ResponseEntity.created(uri).body(entity);
     }
 
 }
